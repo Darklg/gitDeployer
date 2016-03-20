@@ -2,7 +2,7 @@
 
 echo '################';
 echo '# Git Deployer';
-echo '# v 0.1';
+echo '# v 0.1.1';
 echo '# By @Darklg';
 echo '################';
 echo '';
@@ -68,3 +68,7 @@ cd "${MAINPATH}";
 rsync -ruv --exclude-from "${EXCLUDEFILENAME}" "${SRCPATH}" "${PRODPATH}";
 echo "- [${PROJID}] Project is synchronized !";
 
+# Scripts post deployment
+if [[ ! -f "${MAINPATH}post-deploy.sh" ]]; then
+    . "${MAINPATH}post-deploy.sh";
+fi;
