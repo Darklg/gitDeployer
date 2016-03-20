@@ -2,7 +2,7 @@
 
 echo '################';
 echo '# Git Deployer';
-echo '# v 0.1.1';
+echo '# v 0.1.2';
 echo '# By @Darklg';
 echo '################';
 echo '';
@@ -42,7 +42,7 @@ fi;
 cd "${MAINPATH}";
 if [[ ! -d "${SRCPATH}" ]]; then
     git clone "${GITPATH}" src;
-    echo "- [${PROJID}] Prod is initialized";
+    echo "- [${PROJID}] Source folder is initialized";
 fi;
 
 # Install exclude file
@@ -61,7 +61,7 @@ git pull;
 git submodule init;
 git submodule update;
 git pull;
-echo "- [${PROJID}] Latest project files are pushed";
+echo "- [${PROJID}] Latest project files are pulled";
 
 # Rsync to prod director
 cd "${MAINPATH}";
