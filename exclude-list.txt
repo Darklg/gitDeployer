@@ -1,0 +1,10 @@
+*.scss
+*.sh
+.git
+.gitignore
+.gitmodules
+.travis.yml
+config.rb
+Gruntfile.js
+package.json
+phpunit.xml
