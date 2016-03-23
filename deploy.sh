@@ -2,7 +2,7 @@
 
 echo '################';
 echo '# Git Deployer';
-echo '# v 0.1.2';
+echo '# v 0.2';
 echo '# By @Darklg';
 echo '################';
 echo '';
@@ -17,6 +17,9 @@ PROJID='myprojectname';
 # - Public subfolder ( usually www )
 PRODDIR='wwwfoldername';
 
+# - 1-step deploy ('y' to activate)
+ONESTEPDEPLOY='n';
+
 ###################################
 ## Install
 ###################################
@@ -24,6 +27,7 @@ PRODDIR='wwwfoldername';
 # Vars
 MAINPATH="$(pwd)/";
 GITPATH="${MAINPATH}${PROJID}.git/";
+HOOKPATH="${GITPATH}hooks/post-receive";
 SRCPATH="${MAINPATH}src/";
 PRODPATH="${MAINPATH}${PRODDIR}/";
 EXCLUDEFILENAME="exclude-list.txt";
@@ -36,6 +40,12 @@ if [[ ! -d "${GITPATH}" ]]; then
     cd "${GITPATH}";
     git init --bare;
     echo "- [${PROJID}] GIT Repository is initialized";
+    if [[ "${ONESTEPDEPLOY}" == 'y' ]]; then
+        touch "${HOOKPATH}";
+        echo "#!/bin/sh" >> "${HOOKPATH}";
+        echo "cd ${MAINPATH}" >> "${HOOKPATH}";
+        echo ". deploy.sh" >> "${HOOKPATH}";
+    fi;
 fi;
 
 # Install src dir if not available
@@ -69,6 +79,6 @@ rsync -ruv --exclude-from "${EXCLUDEFILENAME}" "${SRCPATH}" "${PRODPATH}";
 echo "- [${PROJID}] Project is synchronized !";
 
 # Scripts post deployment
-if [[ ! -f "${MAINPATH}post-deploy.sh" ]]; then
+if [[ -f "${MAINPATH}post-deploy.sh" ]]; then
     . "${MAINPATH}post-deploy.sh";
 fi;
