@@ -2,7 +2,7 @@
 
 echo '################';
 echo '# Git Deployer';
-echo '# v 0.2';
+echo '# v 0.2.1';
 echo '# By @Darklg';
 echo '################';
 echo '';
@@ -42,6 +42,7 @@ if [[ ! -d "${GITPATH}" ]]; then
     echo "- [${PROJID}] GIT Repository is initialized";
     if [[ "${ONESTEPDEPLOY}" == 'y' ]]; then
         touch "${HOOKPATH}";
+        chmod +x "${HOOKPATH}";
         echo "#!/bin/sh" >> "${HOOKPATH}";
         echo "cd ${MAINPATH}" >> "${HOOKPATH}";
         echo ". deploy.sh" >> "${HOOKPATH}";
