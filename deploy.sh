@@ -2,7 +2,7 @@
 
 echo '################';
 echo '# Git Deployer';
-echo '# v 0.2.1';
+echo '# v 0.2.2';
 echo '# By @Darklg';
 echo '################';
 echo '';
@@ -44,8 +44,10 @@ if [[ ! -d "${GITPATH}" ]]; then
         touch "${HOOKPATH}";
         chmod +x "${HOOKPATH}";
         echo "#!/bin/sh" >> "${HOOKPATH}";
+        echo "GIT_DIR='${SRCPATH}.git';" >> "${HOOKPATH}";
+        echo "GIT_WORK_TREE='${SRCPATH}';" >> "${HOOKPATH}";
         echo "cd ${MAINPATH}" >> "${HOOKPATH}";
-        echo ". deploy.sh" >> "${HOOKPATH}";
+        echo "/bin/bash ${MAINPATH}deploy.sh" >> "${HOOKPATH}";
     fi;
 fi;
 
